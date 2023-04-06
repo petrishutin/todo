@@ -1,7 +1,8 @@
 import pytest
 from beanie import PydanticObjectId
 from fastapi import testclient
-from main import app
+
+from app.main import app
 
 
 @pytest.fixture(scope="module")

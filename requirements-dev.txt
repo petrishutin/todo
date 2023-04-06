@@ -1,0 +1,9 @@
+black
+flake8
+flake8-print
+Flake8-pyproject
+isort
+mypy
+pydantic~=1.10.7
+pytest
+httpx
