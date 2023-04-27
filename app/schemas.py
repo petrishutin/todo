@@ -23,6 +23,12 @@ class UserIn(BaseModel):
         return v
 
 
+class UserAuth(BaseModel):
+    """User register and login auth"""
+    email: EmailStr
+    password: str
+
+
 class User(Document):
     _id: PydanticObjectId
     name: str
@@ -31,6 +37,11 @@ class User(Document):
 
     class Settings:
         name = "Users"
+
+    @classmethod
+    async def by_email(cls, email: str):
+        """Get a user by email"""
+        return await cls.find_one(cls.email == email)
 
 
 class TodoIn(BaseModel):

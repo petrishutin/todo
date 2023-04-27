@@ -5,4 +5,5 @@ motor-types
 motor~=3.1.2
 email_validator
 pydantic[dotenv]
-
+fastapi-jwt-auth
+bcrypt

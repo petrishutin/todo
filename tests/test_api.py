@@ -1,8 +1,15 @@
 import pytest
 from beanie import PydanticObjectId
 from fastapi import testclient
+from faker import Faker
 
 from app.main import app
+
+
+@pytest.fixture(scope="module")
+def fake():
+    faker = Faker()
+    yield faker
 
 
 @pytest.fixture(scope="module")
@@ -12,19 +19,35 @@ def client():
 
 
 @pytest.fixture(scope="module")
-def existing_user_id(client):
-    response = client.post(
-        "/api/v1/user", json={"name": "test", "email": "test1@test.com", "password1": "test", "password2": "test"}
-    )
+def create_user_data(fake: Faker):  # noqa
+    def _create_user_data():
+        return {"name": f"{fake.name()}", "email": f"{fake.email()}", "password1": "test",
+                "password2": "test"}
+
+    return _create_user_data
+
+
+@pytest.fixture(scope="module")
+def existing_user_id(client, create_user_data):  # noqa
+    user = create_user_data()
+    response = client.post("/api/v1/user", json=user)
     return response.json()
 
 
-def test_create_user_200(client):  # noqa
+def test_create_user_200(client, fake):  # noqa
     response = client.post(
-        "/api/v1/user", json={"name": "test", "email": "test@test.com", "password1": "test", "password2": "test"}
+        "/api/v1/user",
+        json={"name": f"{fake.name()}", "email": f"{fake.email()}", "password1": "test", "password2": "test"}
     )
     assert response.status_code == 200, response.json()
     assert PydanticObjectId(response.json())
+
+
+def test_create_user_400(client, create_user_data):  # noqa
+    user = create_user_data()
+    client.post("/api/v1/user", json=user)
+    response = client.post("/api/v1/user", json=user)
+    assert response.status_code == 400, response.json()
 
 
 def test_get_user_200(client, existing_user_id):  # noqa
@@ -32,6 +55,11 @@ def test_get_user_200(client, existing_user_id):  # noqa
     assert response.status_code == 200, response.json()
     for key in ("name", "email", "hashed_password"):
         assert key in response.json(), response.json()
+
+
+def test_get_user_404(client):  # noqa
+    response = client.get(f"/api/v1/user/{str(PydanticObjectId())}")
+    assert response.status_code == 404, response.json()
 
 
 def test_create_todo_for_user_200(client, existing_user_id):  # noqa

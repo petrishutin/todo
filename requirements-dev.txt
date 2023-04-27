@@ -7,3 +7,5 @@ mypy
 pydantic~=1.10.7
 pytest
 httpx
+Faker
+coverage
