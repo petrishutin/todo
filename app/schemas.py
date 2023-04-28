@@ -25,6 +25,7 @@ class UserIn(BaseModel):
 
 class UserAuth(BaseModel):
     """User register and login auth"""
+
     email: EmailStr
     password: str
 
@@ -58,3 +59,14 @@ class Todo(Document):
 
     class Settings:
         name = "Todos"
+
+
+class Attachment(Document):
+    user_id: str
+    todo_id: str | None
+    file_name: str
+    file_type: str
+    file_size: int
+
+    class Settings:
+        name = "Attachments"

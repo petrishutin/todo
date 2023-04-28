@@ -1,5 +1,6 @@
 from beanie import PydanticObjectId
 from fastapi import APIRouter, HTTPException
+
 from app.schemas import User, UserIn
 from app.sec_utils import hash_password
 

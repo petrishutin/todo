@@ -1,14 +1,28 @@
 version: '3.8'
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: ${TARGET:-dev}
     env_file:
       - ./.env
-    command: /entrypoint.sh
+    command: ['/entrypoint.sh']
     ports:
       - "8100:8000"
     depends_on:
       - mongo
+      - filestorage
+
+  filestorage:
+    image: petrishutin/filestorage:latest
+    env_file:
+      - ./.env
+    command: ['/entrypoint.sh']
+    ports:
+      - "8001:8000"
+    volumes:
+      - './.local_file_storage:/var/lib/local_file_storage'
 
   mongo:
     image: mongo:latest

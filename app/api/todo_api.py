@@ -1,5 +1,6 @@
 from beanie import PydanticObjectId
 from fastapi import APIRouter, HTTPException
+
 from app.schemas import Todo, TodoIn, User, UserIn
 
 todo_router = APIRouter(prefix="/user")

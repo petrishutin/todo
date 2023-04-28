@@ -22,6 +22,9 @@ up:
 down:
 	docker-compose -f docker-compose-test.yaml down
 
+rebuild:
+	docker-compose -f docker-compose-test.yaml up -d --build app
+
 test: down
 	docker-compose -f docker-compose-test.yaml build
 	docker-compose -f docker-compose-test.yaml run --rm app /wait-for-it.sh mongo:27017 -- pytest -s ../tests

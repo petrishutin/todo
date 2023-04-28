@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_jwt_auth import AuthJWT
 
-from app.schemas import UserAuth, User
-from app.settings import Settings
+from app.schemas import User, UserAuth
 from app.sec_utils import hash_password
+from app.settings import Settings
 
 auth_router = APIRouter(prefix="/auth")
 

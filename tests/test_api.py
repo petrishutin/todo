@@ -1,7 +1,7 @@
 import pytest
 from beanie import PydanticObjectId
-from fastapi import testclient
 from faker import Faker
+from fastapi import testclient
 
 from app.main import app
 
@@ -21,8 +21,7 @@ def client():
 @pytest.fixture(scope="module")
 def create_user_data(fake: Faker):  # noqa
     def _create_user_data():
-        return {"name": f"{fake.name()}", "email": f"{fake.email()}", "password1": "test",
-                "password2": "test"}
+        return {"name": f"{fake.name()}", "email": f"{fake.email()}", "password1": "test", "password2": "test"}
 
     return _create_user_data
 
@@ -37,7 +36,7 @@ def existing_user_id(client, create_user_data):  # noqa
 def test_create_user_200(client, fake):  # noqa
     response = client.post(
         "/api/v1/user",
-        json={"name": f"{fake.name()}", "email": f"{fake.email()}", "password1": "test", "password2": "test"}
+        json={"name": f"{fake.name()}", "email": f"{fake.email()}", "password1": "test", "password2": "test"},
     )
     assert response.status_code == 200, response.json()
     assert PydanticObjectId(response.json())

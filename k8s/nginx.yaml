@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index-html-configmap-2
+  namespace: august
+data:
+  index.html: |
+    <html>
+    <h1>Welcome</h1>
+    </br>
+    <h1>Hi! This is a configmap Index file ## 2 ## </h1>
+    </html
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-2  # имя деплоймента
+  namespace: august  # принадлежность к пространству имен
+spec:  # спецификация деплоймента
+  selector:  # (слектор как его найти)
+    matchLabels:
+      app: nginx
+  replicas: 1  # количество реплик. В промышленной среде 2 и более
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts: # монтирование созданной ниже абстракции по указанному пути
+            - name: nginx-index-file
+              mountPath: /usr/share/nginx/html/
+      volumes: # это создание абстракции которая заберет документ из конфигмапа
+        - name: nginx-index-file
+          configMap:
+            name: august-configmap
+
+---
