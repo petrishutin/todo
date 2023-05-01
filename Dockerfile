@@ -6,7 +6,6 @@ COPY ./requirements.txt /app
 RUN pip install -r requirements.txt
 COPY ./scripts/entrypoint.sh /
 COPY ./scripts/wait-for-it.sh /
-COPY ./.env /app
 COPY ./app /app
 
 FROM prod as dev

@@ -9,7 +9,7 @@ services:
       - ./.env
     command: ['/entrypoint.sh']
     ports:
-      - "8100:8000"
+      - "8000:8000"
     depends_on:
       - mongo
       - filestorage
@@ -30,4 +30,3 @@ services:
       - "27117:27017"
     env_file:
       - ./.env
-
