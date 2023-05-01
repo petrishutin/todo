@@ -61,9 +61,17 @@ class Todo(Document):
         name = "Todos"
 
 
+class AttachmentIn(BaseModel):
+    user_id: str
+    todo_id: str | None = None
+    file_name: str
+    file_type: str
+    file_size: int
+
+
 class Attachment(Document):
     user_id: str
-    todo_id: str | None
+    todo_id: str | None = None
     file_name: str
     file_type: str
     file_size: int
