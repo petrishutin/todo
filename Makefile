@@ -3,29 +3,34 @@ deps:
 	pip install -r requirements.txt
 	pip install -r requirements-dev.txt
 
-run_mongo:
-	docker run -d -p 27017:27017 -e MONGO_INITDB_DATABASE=try_mongo -e MONGO_INITDB_ROOT_USERNAME=test -e MONGO_INITDB_ROOT_PASSWORD=test --name try_mongo mongo
-
-stop_mongo:
-	docker stop try_mongo
-	docker rm try_mongo
-
 lint:
 	black .
 	isort .
 	flake8 .
 	mypy .
 
+check:
+	black --check .
+	isort --check-only .
+	flake8 .
+	mypy .
+
 up:
-	docker-compose -f docker-compose-test.yaml up --build
+	docker-compose up --build
 
 down:
-	docker-compose -f docker-compose-test.yaml down
+	docker-compose down
+
+dev_up:
+	docker-compose up --build filestorage mongo
 
 rebuild:
-	docker-compose -f docker-compose-test.yaml up -d --build app
+	docker-compose up -d --build app
 
 test: down
-	docker-compose -f docker-compose-test.yaml build
-	docker-compose -f docker-compose-test.yaml run --rm app /wait-for-it.sh mongo:27017 localstack:4563 -- pytest -s ../tests
-	docker-compose -f docker-compose-test.yaml down
+	docker-compose up -d filestorage mongo
+	pytest -vv -s
+	docker-compose down
+
+test_local:
+	docker-compose up -d filestorage mongo && bash -c 'source .env && export $$(cut -d= -f1 .env) && pytest -vv -s' && docker-compose down

@@ -1,0 +1,33 @@
+name: Run tests on any Push event
+on:
+  push:
+
+jobs:
+  run_tests:
+    timeout-minutes: 10
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3.2.0
+
+      - name: Install code dependency
+        run: make deps
+
+      - name: Run linters
+        run: make check
+
+      - name: Run pytest
+        env:
+          MONGO_HOST: mongo
+          MONGO_PORT: 27117
+          MONGO_INITDB_DATABASE: todo
+          MONGO_INITDB_ROOT_USERNAME: test
+          MONGO_INITDB_ROOT_PASSWORD: test
+          MONGO_URI: mongodb://test:test@mongo
+          FILE_STORAGE_URL: http://filestorage:8000
+          FILE_STORAGE_TYPE: LocalFileStorage
+          BUCKETS: test-1,test-2
+          PYTHONPATH: /
+          PYTHONUNBUFFERED: 1
+
+        run: make test

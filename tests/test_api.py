@@ -2,6 +2,10 @@ import pytest
 from beanie import PydanticObjectId
 from faker import Faker
 from fastapi import testclient
+import os
+
+print(os.getcwd())
+
 
 from app.main import app
 

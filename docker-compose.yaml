@@ -15,7 +15,7 @@ services:
       - filestorage
 
   filestorage:
-    image: petrishutin/filestorage:latest
+    image: us-central1-docker.pkg.dev/august-gradient-382709/repo1/filestorage:latest
     env_file:
       - ./.env
     command: ['/entrypoint.sh']

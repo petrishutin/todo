@@ -1,4 +1,4 @@
-FROM python:3.11.2 as prod
+FROM python:3.11.2-slim as prod
 ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 RUN python -m pip install --upgrade pip

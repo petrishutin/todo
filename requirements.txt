@@ -6,6 +6,7 @@ motor~=3.1.2
 email_validator
 pydantic[dotenv]
 python-dotenv
+python-multipart
 fastapi-jwt-auth
 bcrypt
 httpx
