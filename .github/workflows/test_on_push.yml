@@ -16,6 +16,9 @@ jobs:
       - name: Run linters
         run: make check
 
+      - name: Create env file
+        run: echo '' > .env
+
       - name: Run pytest
         env:
           MONGO_HOST: mongo
