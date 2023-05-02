@@ -1,6 +1,5 @@
 import httpx
-
-from async_retrying_ng import retry
+from async_retrying_ng import retry  # type: ignore
 
 
 class FileStorage:

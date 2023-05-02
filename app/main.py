@@ -5,7 +5,7 @@ from fastapi_jwt_auth.exceptions import AuthJWTException  # type: ignore
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from app.api import api_router
-from app.schemas import Todo, User, Attachment
+from app.schemas import Attachment, Todo, User
 from app.settings import Settings
 
 app = FastAPI()

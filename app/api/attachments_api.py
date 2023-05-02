@@ -1,9 +1,9 @@
-from fastapi import APIRouter, UploadFile, Depends
 from beanie import PydanticObjectId
+from fastapi import APIRouter, Depends, UploadFile
 
 from app.filestorage import FileStorage
-from app.settings import get_settings, Settings
 from app.schemas import Attachment
+from app.settings import Settings, get_settings
 
 attachments_router = APIRouter(prefix="/attachments")
 
@@ -14,10 +14,10 @@ def file_storage():
 
 @attachments_router.post("/{user_id}", status_code=201)
 async def upload_data(
-        user_id: PydanticObjectId,
-        file: UploadFile,
-        client: FileStorage = Depends(file_storage),
-        setting: Settings = Depends(get_settings)
+    user_id: PydanticObjectId,
+    file: UploadFile,
+    client: FileStorage = Depends(file_storage),
+    setting: Settings = Depends(get_settings),
 ):
     attachment = await Attachment.create(Attachment.from_upload_file(file, user_id))
     file_uid = await client.upload(file)
