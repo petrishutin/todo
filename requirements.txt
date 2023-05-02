@@ -10,3 +10,4 @@ python-multipart
 fastapi-jwt-auth
 bcrypt
 httpx
+async_retrying_ng
