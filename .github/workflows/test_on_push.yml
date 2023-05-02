@@ -21,12 +21,10 @@ jobs:
 
       - name: Run pytest
         env:
-          MONGO_HOST: mongo
-          MONGO_PORT: 27117
           MONGO_INITDB_DATABASE: todo
           MONGO_INITDB_ROOT_USERNAME: test
           MONGO_INITDB_ROOT_PASSWORD: test
-          MONGO_URI: mongodb://test:test@mongo:27117
+          MONGO_URI: mongodb://test:test@localhost:27117
           FILE_STORAGE_URL: http://filestorage:8001
           FILE_STORAGE_TYPE: LocalFileStorage
           BUCKETS: test-1,test-2
