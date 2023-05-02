@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
       target: ${TARGET:-dev}
     env_file:
-      - ./.env
+      - .env
     command: ['/entrypoint.sh']
     ports:
       - "8000:8000"
@@ -17,7 +17,7 @@ services:
   filestorage:
     image: petrishutin/filestorage:latest
     env_file:
-      - ./.env
+      - .env
     command: ['/entrypoint.sh']
     ports:
       - "8001:8000"
@@ -29,4 +29,4 @@ services:
     ports:
       - "27117:27017"
     env_file:
-      - ./.env
+      - .env

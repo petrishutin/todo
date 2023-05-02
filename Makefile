@@ -27,10 +27,7 @@ dev_up:
 rebuild:
 	docker-compose up -d --build app
 
-test: down
+test:
 	docker-compose up -d filestorage mongo
 	pytest -vv -s
 	docker-compose down
-
-test_local:
-	docker-compose up -d filestorage mongo && bash -c 'source .env && export $$(cut -d= -f1 .env) && pytest -vv -s' && docker-compose down
