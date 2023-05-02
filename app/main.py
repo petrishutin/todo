@@ -5,7 +5,7 @@ from fastapi_jwt_auth.exceptions import AuthJWTException  # type: ignore
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from app.api import api_router
-from app.schemas import Todo, User
+from app.schemas import Todo, User, Attachment
 from app.settings import Settings
 
 app = FastAPI()
@@ -21,7 +21,7 @@ def get_settings():
 async def start_db():
     settings = get_settings()
     client = AsyncIOMotorClient(settings.MONGO_URI)
-    await init_beanie(database=client.db_name, document_models=[User, Todo])
+    await init_beanie(database=client.db_name, document_models=[User, Todo, Attachment])
 
 
 @app.exception_handler(AuthJWTException)
