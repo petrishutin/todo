@@ -1,8 +1,5 @@
-from enum import Enum
-
 from beanie import Document, PydanticObjectId
 from pydantic import BaseModel, EmailStr, validator
-from fastapi import UploadFile
 
 
 class UserIn(BaseModel):

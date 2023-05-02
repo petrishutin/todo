@@ -1,7 +1,7 @@
 from beanie import init_beanie
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from fastapi_jwt_auth.exceptions import AuthJWTException
+from fastapi_jwt_auth.exceptions import AuthJWTException  # type: ignore
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from app.api import api_router

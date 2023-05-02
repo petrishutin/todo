@@ -2,10 +2,6 @@ import uuid
 
 import pytest
 
-import os
-
-print(os.getcwd())
-
 from app.filestorage import FileStorage
 from app.settings import get_settings
 

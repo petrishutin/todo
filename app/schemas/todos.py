@@ -1,8 +1,7 @@
 from enum import Enum
 
-from beanie import Document, PydanticObjectId
-from pydantic import BaseModel, EmailStr, validator
-from fastapi import UploadFile
+from beanie import Document
+from pydantic import BaseModel
 
 
 class TodoEnum(str, Enum):

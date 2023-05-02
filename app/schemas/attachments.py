@@ -1,6 +1,6 @@
 from beanie import Document, PydanticObjectId
-from pydantic import BaseModel
 from fastapi import UploadFile
+from pydantic import BaseModel
 
 
 class AttachmentIn(BaseModel):

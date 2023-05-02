@@ -1,7 +1,6 @@
-from beanie import PydanticObjectId
 from fastapi import APIRouter, HTTPException
 
-from app.schemas import Todo, TodoIn, User, UserIn
+from app.schemas import Todo, TodoIn
 
 todo_router = APIRouter(prefix="/user")
 
@@ -34,7 +33,7 @@ async def update_todo(user_id: str, todo_id: str, todo_update_data: TodoIn):
 
 
 @todo_router.delete("/{user_id}/todo/{todo_id}")
-async def delete_todo(user_id: str, todo_id: str,):  # fmt: skip
+async def delete_todo(user_id: str, todo_id: str, ):  # fmt: skip
     todo = await Todo.find(Todo.id == todo_id and Todo.user_id == user_id).first_or_none()
     if not todo:
         raise HTTPException(status_code=404)

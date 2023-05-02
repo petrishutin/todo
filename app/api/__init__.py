@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 
+from app.api.attachments_api import attachments_router
 from app.api.auth_api import auth_router
 from app.api.todo_api import todo_router
 from app.api.user_api import user_router
-from app.api.attachments_api import attachments_router
 
 api_router = APIRouter(prefix="/api/v1")
 

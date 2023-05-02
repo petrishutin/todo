@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from fastapi_jwt_auth import AuthJWT
+from fastapi_jwt_auth import AuthJWT  # type: ignore
 
 from app.schemas import User, UserAuth
 from app.sec_utils import hash_password

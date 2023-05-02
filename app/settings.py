@@ -1,11 +1,11 @@
 from pydantic import BaseSettings
-from fastapi_jwt_auth import AuthJWT
 
 
 class Settings(BaseSettings):
     """Server config settings"""
+
     # Mongo Engine settings
-    MONGO_URI: str = f"mongodb://test:test@localhost:27117"
+    MONGO_URI: str = "mongodb://test:test@localhost:27117"
     FILE_STORAGE_URL: str = "http://localhost:8001"
 
     # Security settings
