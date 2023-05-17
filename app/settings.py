@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     HOST_NAME: str = "http://localhost:8000"
 
     # Mongo Engine settings
-    MONGO_URI: str = "mongodb://test:test@localhost:27117"
+    MONGO_URI: str = "mongodb://localhost:27117"
 
     # File storage settings
     FILE_STORAGE_URL: str = "http://localhost:8001"
