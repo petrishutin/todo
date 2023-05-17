@@ -22,5 +22,5 @@ make dev_up
 ### run tests in docker-compose
 
 ``` shellsession
-make test_local
+make test
 ```

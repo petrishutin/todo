@@ -7,7 +7,7 @@ services:
       target: ${TARGET:-dev}
     env_file:
       - .env
-    command: ['/entrypoint.sh']
+    command: [ '/entrypoint.sh' ]
     ports:
       - "8000:8000"
     depends_on:
@@ -18,7 +18,7 @@ services:
     image: petrishutin/filestorage:latest
     env_file:
       - .env
-    command: ['/entrypoint.sh']
+    command: [ '/entrypoint.sh' ]
     ports:
       - "8001:8000"
     volumes:
@@ -30,3 +30,5 @@ services:
       - "27117:27017"
     env_file:
       - .env
+    volumes:
+      - './.mongo:/var/lib/mongo'

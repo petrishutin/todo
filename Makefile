@@ -24,9 +24,6 @@ down:
 dev_up:
 	docker-compose up --build filestorage mongo
 
-rebuild:
-	docker-compose up -d --build app
-
 test:
 	docker-compose up -d filestorage mongo
 	sleep 5

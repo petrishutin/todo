@@ -19,7 +19,7 @@ class Attachment(Document):
     file_url: str | None = None
 
     @staticmethod
-    def from_upload_file(
+    async def from_upload_file(
         file: UploadFile,
         user_id: PydanticObjectId,
     ):

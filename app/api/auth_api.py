@@ -26,5 +26,4 @@ async def login(user: UserAuth, auth: AuthJWT = Depends()):
 async def logout(auth: AuthJWT = Depends()):
     auth.jwt_required()
     auth.unset_jwt_cookies()
-
     return {"message": "Successfully logged out"}
