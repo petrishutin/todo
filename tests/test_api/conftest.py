@@ -26,7 +26,16 @@ def create_user_data(fake: Faker):  # noqa
 
 
 @pytest.fixture(scope="module")
-def existing_user_id(client, create_user_data):  # noqa
+def existing_user_id(client, create_user_data):
     user = create_user_data()
     response = client.post("/api/v1/user", json=user)
     return response.json()
+
+
+@pytest.fixture(scope="module")
+def existing_user_token(client, create_user_data):
+    user = create_user_data()
+    client.post("/api/v1/user", json=user)
+    response = client.post("/api/v1/login", data={"username": user["email"], "password": user["password1"]})
+    assert response.status_code == 200, response.json()
+    return response.json()["access_token"]
