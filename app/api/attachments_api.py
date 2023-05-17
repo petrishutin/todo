@@ -20,7 +20,7 @@ async def upload_data(
     setting: Settings = Depends(get_settings),
 ):
     attachment = await Attachment.create(await Attachment.from_upload_file(file, user_id))
-    file_uid = await client.upload(file.file)
+    file_uid = await client.upload(file.file)  # type: ignore
     attachment.file_uid = file_uid
     attachment.file_url = f"{setting.HOST_NAME}/{user_id}/attachments/{file_uid}"
     await attachment.save()
