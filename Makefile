@@ -26,6 +26,5 @@ dev_up:
 
 test:
 	docker-compose up -d filestorage mongo
-	sleep 5
 	pytest -vv -s
 	docker-compose down
