@@ -5,8 +5,6 @@ services:
       context: .
       dockerfile: Dockerfile
       target: ${TARGET:-dev}
-    env_file:
-      - .env
     command: [ '/entrypoint.sh' ]
     ports:
       - "8000:8000"
@@ -16,19 +14,20 @@ services:
 
   filestorage:
     image: petrishutin/filestorage:latest
-    env_file:
-      - .env
+    environment:
+      - FILE_STORAGE_TYPE=LocalFileStorage
+      - BUCKETS=test-1,test-2
     command: [ '/entrypoint.sh' ]
     ports:
       - "8001:8000"
     volumes:
       - './.local_file_storage:/var/lib/local_file_storage'
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo:latest
     ports:
       - "27117:27017"
-    env_file:
-      - .env
     volumes:
       - './.mongo:/var/lib/mongo'

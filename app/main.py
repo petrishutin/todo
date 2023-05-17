@@ -21,7 +21,7 @@ def get_settings():
 async def start_db():
     settings = get_settings()
     client = AsyncIOMotorClient(settings.MONGO_URI)
-    await init_beanie(database=client.db_name, document_models=[User, Todo, Attachment])
+    await init_beanie(database=client.todos, document_models=[User, Todo, Attachment])
 
 
 @app.exception_handler(AuthJWTException)
