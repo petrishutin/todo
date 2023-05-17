@@ -9,7 +9,6 @@ from app.schemas import Token, User
 from app.sec_utils import hash_password
 from app.settings import get_settings
 
-SECRET_KEY = "61ab2f50c65f2d1ddc99ea0cbacab9332c3e5acd6fa8dedf5d35e79c68fd5bb5"
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth")
@@ -25,7 +24,8 @@ def create_access_token(data: dict):
 
 
 def get_current_user_id(token: str = Depends(oauth2_scheme)):
-    return jwt.decode(token, SECRET_KEY, algorithms="HS256").get("user_id")
+    settings = get_settings()
+    return jwt.decode(token, settings.SECRET_KEY, algorithms="HS256").get("user_id")
 
 
 @auth_router.post("/login", response_model=Token)
