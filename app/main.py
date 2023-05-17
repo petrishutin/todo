@@ -1,7 +1,7 @@
 from beanie import init_beanie
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from fastapi_jwt_auth.exceptions import AuthJWTException  # type: ignore
+from jose import JWTError  # type: ignore
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from app.api import api_router
@@ -24,8 +24,8 @@ async def start_db():
     await init_beanie(database=client.todos, document_models=[User, Todo, Attachment])
 
 
-@app.exception_handler(AuthJWTException)
-def authjwt_exception_handler(request: Request, exc: AuthJWTException):  # noqa F811
+@app.exception_handler(JWTError)
+def jwt_exception_handler(request: Request, exc: JWTError):  # noqa F811
     return JSONResponse(
         status_code=exc.status_code,  # type: ignore
         content={"detail": exc.message},  # type: ignore

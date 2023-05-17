@@ -14,8 +14,10 @@ class Settings(BaseSettings):
     FILE_STORAGE_URL: str = "http://localhost:8001"
 
     # Security settings
-    AUTHJWT_SECRET_KEY: str = "secret"
+    SECRET_KEY: str = "secret"
     SALT: str = "$2b$12$GeBAcXwm5tCsWVf2992qdO"
+    ACCESS_TOKEN_EXPIRATION_TIME: int = 60 * 60 * 24  # 1 day
+    REFRESH_TOKEN_EXPIRATION_TIME: int = 60 * 60 * 24 * 30  # 1 month
 
 
 def get_settings() -> Settings:

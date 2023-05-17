@@ -22,12 +22,12 @@ async def upload_data(
     attachment = await Attachment.create(await Attachment.from_upload_file(file, user_id))
     file_uid = await client.upload(file.file)  # type: ignore
     attachment.file_uid = file_uid
-    attachment.file_url = f"{setting.HOST_NAME}/{user_id}/attachments/{file_uid}"
+    attachment.file_url = f"{setting.HOST_NAME}/api/v1/attachments/{file_uid}"
     await attachment.save()
     return attachment
 
 
-@attachments_router.get("/{user_id}/{file_uid}")
-async def download_attachment(user_id: str, file_uid: str, client: FileStorage = Depends(file_storage)):
+@attachments_router.get("/{file_uid}")
+async def download_attachment(file_uid: str, client: FileStorage = Depends(file_storage)):
     file_metadata = await Attachment.find_one()
     return Response(content=await client.download(file_uid), media_type=file_metadata.file_type)  # type: ignore
