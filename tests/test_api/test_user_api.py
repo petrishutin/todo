@@ -17,8 +17,8 @@ def test_create_user_400(client, create_user_data):  # noqa
     assert response.status_code == 400, response.json()
 
 
-def test_get_user_200(client, existing_user_token):  # noqa
-    response = client.get("/api/v1/user", headers={"Authorization": f"Bearer {existing_user_token}"})
+def test_get_user_200(client, auth_header):  # noqa
+    response = client.get("/api/v1/user", headers=auth_header)
     assert response.status_code == 200, response.json()
     for key in ("name", "email", "hashed_password"):
         assert key in response.json(), response.json()

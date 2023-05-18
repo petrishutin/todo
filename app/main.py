@@ -8,7 +8,7 @@ from app.api import api_router
 from app.schemas import Attachment, Todo, User
 from app.settings import Settings
 
-app = FastAPI()
+app = FastAPI(title="Todo API", version="0.1.0")
 
 app.include_router(api_router)
 

@@ -9,10 +9,10 @@ def image():
         return f.read()
 
 
-def test_upload_attachment_201(client, existing_user_token, image):
+def test_upload_attachment_201(client, auth_header, image):
     response = client.post(
         "/api/v1/attachments",
-        headers={"Authorization": f"Bearer {existing_user_token}"},
+        headers=auth_header,
         files={"file": ("photo.jpg", image)},
     )
     assert response.status_code == 201, response.json()
@@ -26,15 +26,15 @@ def test_upload_attachment_201(client, existing_user_token, image):
     assert response.json()["created_at"]
 
 
-def test_download_attachment_200(client, existing_user_token, image):
+def test_download_attachment_200(client, auth_header, image):
     file_uid = client.post(
         "/api/v1/attachments",
-        headers={"Authorization": f"Bearer {existing_user_token}"},
+        headers=auth_header,
         files={"file": ("photo.jpg", image)},
     ).json()["file_uid"]
     response = client.get(
         f"/api/v1/attachments/{file_uid}",
-        headers={"Authorization": f"Bearer {existing_user_token}"},
+        headers=auth_header,
     )
     assert response.status_code == 200, response.json()
     assert response.content == image

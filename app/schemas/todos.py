@@ -3,6 +3,8 @@ from enum import Enum
 from beanie import Document
 from pydantic import BaseModel
 
+from app.schemas.attachments import Attachment
+
 
 class TodoEnum(str, Enum):
     todo = "todo"
@@ -14,6 +16,7 @@ class TodoIn(BaseModel):
     title: str
     description: str
     status: TodoEnum
+    attachments: list[Attachment] = []
 
 
 class Todo(Document):
@@ -21,6 +24,7 @@ class Todo(Document):
     title: str
     description: str
     status: TodoEnum
+    attachments: list[Attachment] = []
 
     class Settings:
         name = "Todos"
