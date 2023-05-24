@@ -1,5 +1,5 @@
-from locust import HttpUser, task, between
 from faker import Faker
+from locust import HttpUser, between, task
 
 
 class UserFlow(HttpUser):
@@ -14,7 +14,10 @@ class UserFlow(HttpUser):
 
     def on_start(self):
         self.user_data = {
-            "name": f"{self.fake.name()}", "email": f"{self.fake.email()}", "password1": "test", "password2": "test"
+            "name": f"{self.fake.name()}",
+            "email": f"{self.fake.email()}",
+            "password1": "test",
+            "password2": "test",
         }
         self.client.post("/api/v1/user", json=self.user_data)
         response = self.client.post(
@@ -22,9 +25,13 @@ class UserFlow(HttpUser):
         )
         self.token = {"Authorization": f"Bearer {response.json()['access_token']}"}
 
-        self.todo_id = self.client.post(
-            "/api/v1/todo", json={"title": self.fake.name(), "description": self.fake.text()}, headers=self.token
-        ).content.decode("utf-8").replace('"', "")
+        self.todo_id = (
+            self.client.post(
+                "/api/v1/todo", json={"title": self.fake.name(), "description": self.fake.text()}, headers=self.token
+            )
+            .content.decode("utf-8")
+            .replace('"', "")
+        )
 
     def on_stop(self):
         pass
@@ -39,13 +46,9 @@ class UserFlow(HttpUser):
         self.client.put(
             f"/api/v1/todo/{self.todo_id}",
             json={"title": self.fake.name(), "description": self.fake.text()},
-            headers=self.token
+            headers=self.token,
         )
 
     @task
     def patch_todo_item(self):
-        self.client.patch(
-            f"/api/v1/todo/{self.todo_id}",
-            params={"status": "done"},
-            headers=self.token
-        )
+        self.client.patch(f"/api/v1/todo/{self.todo_id}", params={"status": "done"}, headers=self.token)
