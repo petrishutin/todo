@@ -14,13 +14,13 @@ def check_todo(todo: Todo | None, user_id: str):
         raise HTTPException(status_code=403)
 
 
-@todo_router.post("/")
+@todo_router.post("")
 async def create_todo(todo_data: TodoIn, user_id=Depends(get_current_user_id)):
     result = await Todo.insert_one(Todo(**todo_data.dict(), user_id=user_id))
     return result.id  # type: ignore
 
 
-@todo_router.get("/")
+@todo_router.get("")
 async def get_todos(user_id=Depends(get_current_user_id)) -> list[Todo]:
     return await Todo.find(Todo.user_id == ObjectId(user_id)).to_list()
 

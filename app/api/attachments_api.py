@@ -12,7 +12,7 @@ def file_storage():
     return FileStorage(get_settings())
 
 
-@attachments_router.post("/", status_code=201)
+@attachments_router.post("", status_code=201)
 async def upload_data(
     file: UploadFile,
     client: FileStorage = Depends(file_storage),

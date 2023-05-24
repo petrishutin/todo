@@ -15,7 +15,7 @@ class TodoEnum(str, Enum):
 class TodoIn(BaseModel):
     title: str
     description: str
-    status: TodoEnum
+    status: TodoEnum | None = "todo"
     attachments: list[Attachment] = []
 
 

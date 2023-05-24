@@ -4,8 +4,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: ${TARGET:-dev}
+      target: ${TARGET:-prod}
     command: [ '/entrypoint.sh' ]
+    environment:
+      - MONGO_URI=mongodb://mongo:27017
+      - FILE_STORAGE_URL=http://filestorage:8000
     ports:
       - "8000:8000"
     depends_on:
