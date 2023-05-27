@@ -23,9 +23,15 @@ def test_create_todo_for_user_200(client, auth_header):  # noqa
 
 
 def test_get_todos_for_user_200(client, auth_header):
+    client.post(
+        "/api/v1/todo",
+        json={"title": "test", "description": "test", "status": "todo"},
+        headers=auth_header,
+    )
     response = client.get("/api/v1/todo", headers=auth_header)
     assert response.status_code == 200, response.json()
     assert isinstance(response.json(), list)
+    assert len(response.json()) >= 1
 
 
 def test_get_todo_for_user_200(client, auth_header):

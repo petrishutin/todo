@@ -3,7 +3,6 @@ from pydantic import BaseModel, EmailStr, validator
 
 
 class UserIn(BaseModel):
-    name: str
     email: EmailStr
     password1: str
     password2: str
@@ -24,7 +23,6 @@ class UserAuth(BaseModel):
 
 class User(Document):
     _id: PydanticObjectId
-    name: str
     email: EmailStr
     hashed_password: str
 

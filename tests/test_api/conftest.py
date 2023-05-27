@@ -20,7 +20,7 @@ def client():
 @pytest.fixture(scope="module")
 def create_user_data(fake: Faker):  # noqa
     def _create_user_data():
-        return {"name": f"{fake.name()}", "email": f"{fake.email()}", "password1": "test", "password2": "test"}
+        return {"email": f"{fake.email()}", "password1": "test", "password2": "test"}
 
     return _create_user_data
 

@@ -1,3 +1,4 @@
+from beanie import PydanticObjectId
 from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException
 
@@ -10,13 +11,13 @@ todo_router = APIRouter(prefix="/todo")
 def check_todo(todo: Todo | None, user_id: str):
     if not todo:
         raise HTTPException(status_code=404)
-    if todo.user_id != user_id:
+    if todo.user_id != ObjectId(user_id):
         raise HTTPException(status_code=403)
 
 
 @todo_router.post("")
 async def create_todo(todo_data: TodoIn, user_id=Depends(get_current_user_id)):
-    result = await Todo.insert_one(Todo(**todo_data.dict(), user_id=user_id))
+    result = await Todo.insert_one(Todo(**todo_data.dict(), user_id=ObjectId(user_id)))
     return result.id  # type: ignore
 
 
@@ -26,8 +27,8 @@ async def get_todos(user_id=Depends(get_current_user_id)) -> list[Todo]:
 
 
 @todo_router.get("/{todo_id}")
-async def get_todo(todo_id: str, user_id=Depends(get_current_user_id)):
-    todo = await Todo.find_one(Todo.id == ObjectId(todo_id))
+async def get_todo(todo_id: PydanticObjectId, user_id=Depends(get_current_user_id)):
+    todo = await Todo.find_one(Todo.id == todo_id)
     check_todo(todo, user_id)
     return todo
 
@@ -51,8 +52,8 @@ async def change_todo_status(todo_id: str, status: TodoEnum, user_id=Depends(get
 
 
 @todo_router.delete("/{todo_id}", status_code=204)
-async def delete_todo(todo_id: str, user_id=Depends(get_current_user_id)):  # fmt: skip
-    todo: Todo = await Todo.find_one(Todo.id == ObjectId(todo_id))  # type: ignore
+async def delete_todo(todo_id: PydanticObjectId, user_id=Depends(get_current_user_id)):  # fmt: skip
+    todo: Todo = await Todo.find_one(Todo.id == todo_id)  # type: ignore
     check_todo(todo, user_id)
     await todo.delete()
     return

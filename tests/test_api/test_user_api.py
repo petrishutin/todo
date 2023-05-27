@@ -4,9 +4,9 @@ from beanie import PydanticObjectId
 def test_create_user_200(client, fake):  # noqa
     response = client.post(
         "/api/v1/user",
-        json={"name": f"{fake.name()}", "email": f"{fake.email()}", "password1": "test", "password2": "test"},
+        json={"email": f"{fake.email()}", "password1": "test", "password2": "test"},
     )
-    assert response.status_code == 200, response.json()
+    assert response.status_code == 201, response.json()
     assert PydanticObjectId(response.json())
 
 
@@ -20,7 +20,7 @@ def test_create_user_400(client, create_user_data):  # noqa
 def test_get_user_200(client, auth_header):  # noqa
     response = client.get("/api/v1/user", headers=auth_header)
     assert response.status_code == 200, response.json()
-    for key in ("name", "email", "hashed_password"):
+    for key in ("email", "hashed_password"):
         assert key in response.json(), response.json()
 
 

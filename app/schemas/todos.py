@@ -1,6 +1,6 @@
 from enum import Enum
 
-from beanie import Document
+from beanie import Document, PydanticObjectId
 from pydantic import BaseModel
 
 from app.schemas.attachments import Attachment
@@ -20,7 +20,7 @@ class TodoIn(BaseModel):
 
 
 class Todo(Document):
-    user_id: str
+    user_id: PydanticObjectId
     title: str
     description: str
     status: TodoEnum

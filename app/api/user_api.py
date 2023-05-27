@@ -7,7 +7,7 @@ from app.schemas import User, UserIn
 user_router = APIRouter(prefix="/user")
 
 
-@user_router.post("")
+@user_router.post("", status_code=201)
 async def create_user(user_data: UserIn):
     if await User.by_email(user_data.email):
         raise HTTPException(status_code=400, detail="Email already registered")
